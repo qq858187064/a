@@ -1,14 +1,20 @@
 <template>
-  <div id="app"><div id='test'></div>
+  <div id="app"><div id='test' v-on:click='addCom()'>AAA</div>
+
+
+
+
+  
 <top />
-<navs />
-    <!-- <login v-on:lg="lg"></login> 
-   <login v-on:msg="cb" />-->
-<r v-bind:t="s"/>
+<!-- <navs /> -->
+<component :is='cc' />
+   <!--  <login></login>  -->
+   <!-- <login v-on:msg="cb" />-->
+<!-- <r v-bind:t="s"/> -->
 <router-view></router-view>
 <foot />
 <pop ref='pop'>
-    <component v-bind:is='com'></component>
+    <component slot="body"  v-bind:is='com'></component>
 <!--  <login slot='body'></login> -->
 </pop>
 <keep-alive include='top,foot' exclude='navs'>
@@ -18,20 +24,66 @@
 </template>
 <script>
 import top from '@/components/top'
-import r from '@/components/r'
-import navs from '@/components/nav'
+/* import r from '@/components/r' */
+/* import navs from '@/components/nav' */
 import foot from '@/components/foot'
 import base from '@/raw/base.js'
 
+import Vue from "vue/dist/vue.common.js"
 
+
+
+
+   import('@/components/top.vue').then(cmp => {this.cmp=cmp
+  // mountCmp.call(this, cmp, {title: 123456}, document.body)
+      })
+    function mountCmp (cmp, props, parent) {
+cmp = Vue.extend(cmp.default)
+let node = document.createElement('div')
+parent.appendChild(node)
+new cmp({ //eslint-disable-line
+  el: node,
+  propsData: props,
+  parent: this
+})
+}
+
+
+ var dc=Vue.extend(require('@/components/r.vue').default);
+let node = document.createElement('div')
+document.body.appendChild(node)
+new dc({el:node,propsData:this.props});/**/
+
+/* //父组件中:
+Vue.component('mycontent', {
+        props: ['content'],
+        data() {
+            return {
+                coms: [],
+            }
+        },
+        render: function(h) {
+            this.coms = [];
+            for(var i = 0; i < this.content.length; i++) {
+                this.coms.push(h(this.content[i], {}))
+            }
+            return h('div', {},
+                this.coms)
+        },
+    });
+//子组件调用：
+    <mycontent v-bind:content="content"></mycontent> */
+
+
+this.cc='my';
 //Vue.use(base);
 export default {
   name: 'App',
   components:{
      login: require('@/components/login').default,
    top,
-    navs,
-  r,
+/*     navs, 
+  r,*/
   foot,
   pop:require('@/components/pop').default
    },
@@ -39,7 +91,8 @@ export default {
 return {
   s:"",
   com:'foot',
-  currentView:'top'
+  currentView:'top',
+  cc:''
   /*,
   popv:false弹出窗状态*/
 }
@@ -50,14 +103,42 @@ currentView:function(){
   console.log("watch currentView:"+this.currentView)
 }
 },
+
 created:function(){
     this.localData();
+/*       var a='navs',
+  p='../nav';
+Vue.component(a, function (resolve) {
+  require([p], resolve)//异步加载组件
+})  
+this.components={
+	a: () => import(p),
+  }
+  this.cc=a */
 },
-mounted:function(){
-  console.log(base);
-},
+
   methods:{
-        cb:function(a){
+    addCom:function(){
+/* var Profile = Vue.extend({
+  template: '<p>AAAAAAA</p>',
+  data: function () {
+    return {
+    }
+  }
+}) */
+
+//var dc = Vue.extend(require('@/components/r.vue').default);
+ var dc=Vue.extend(require('@/components/r.vue').default);
+let node = document.createElement('div')
+document.body.appendChild(node)
+new dc().$mount(node);/**/
+
+
+
+
+
+    },
+      cb:function(a){
       console.log(a);
       this.s=a;
     },
@@ -108,11 +189,47 @@ this.$http.get("/apis/home/cb").then(function(rsp){
 //(rsp)=>{}
     }
     */
+   	/*	var a='navs'
+					Vue.component(a, function (resolve) {
+  require(['./nav'], resolve)//异步加载组件
+})  
+this.components={
+	a: () => import('./nav'),
+  }
+  this.lk=a
+*/
+/*Vue.component('lk', function (resolve, reject) {
+    resolve({
+      template: '<link :href="this.$parent.css" type="text/css" rel="stylesheet" />'
+    })
+})
+ new Vue({
+  el:'app',
+  components: {
+	  name:'lk',
+    // <my-component> 将只在父模板可用
+    'lk':{ template: '<link ref="pcss" :href="css" type="text/css" rel="stylesheet" /> '}
+  }
+}) 
+this.lk='lk'*/
+/* // r就是resolve
+const list = r => require.ensure([], () => r(require('./r')), 'r');
+// 路由也是正常的写法  这种是官方推荐的写的 按模块划分懒加载 
+const router = new Router({
+    routes: [
+        {
+           path: './r',
+           component: list,
+           name: 'r'
+        }
+    ]
+})
+ */
   },
   computed:{
 
   }
-}
+} 
 </script>
 
 <style>

@@ -1,4 +1,4 @@
-<template><p v-on:click='$parent.$refs.pop.pop({tit:"tit0",body:"body0",com:"div"})'>
+<template><p v-on:click='$parent.$refs.pop.pop({tit:"tit0",body:"body0",com:"login",cls:"pop2"})'>
 	欢迎您！<a v-if='cu.id==undefined' href='/login'>登录</a><a v-else v-bind:href='/u/+cu.id'>{{cu.nm}}</a></p>
 </template>
 <script>
@@ -20,3 +20,4 @@
 		}
 	}
 </script>
+

@@ -1,0 +1,30 @@
+module.exports={
+    data(){
+            return {
+            show:false,
+            tit:"",
+            body:"",
+            com:"",
+            css:""
+            };
+        },
+        methods:{
+            pop:function(o){
+                console.log(o)
+                if(o)
+                {
+                    this.tit=o.tit;
+                    if(o.com){
+                    this.$parent.com=o.com;
+                }
+                    this.body=o.body;
+                    this.show=true;
+                    if(o.css)
+                        this.css="../assets/"+o.css;
+                }
+                else{
+                    this.show=false;
+                }
+            }
+        }
+    }

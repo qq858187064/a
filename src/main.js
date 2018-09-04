@@ -6,9 +6,11 @@ import router from './router'
 import vuex from 'vuex'
 import store from './vuex/store'
 import axios from 'axios'
-//window.Vue = Vue;//便于全局引用
+window.Vue = Vue;//便于全局引用
 Vue.prototype.$ajax = axios
 Vue.use(vuex)
+import VueRouter from 'vue-router'
+Vue.use(VueRouter)
 
 
 Vue.config.productionTip = false
@@ -21,4 +23,3 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
-
