@@ -1,10 +1,9 @@
 <template>
-  <div id="app"><div id='test' v-on:click='addCom()'>AAA</div>
-
-
-
-
-  
+<div id="app" ref='app'>
+<imgs :ims='ims' />
+<h3 v-on:click='pop(pa)'>1 pop test</h3>
+<h3 v-on:click='pop(pb)'>2 pop test</h3>
+ <h3 v-on:click='pop(pc)'>3 pop test</h3>
 <top />
 <!-- <navs /> -->
 <component :is='cc' />
@@ -13,27 +12,28 @@
 <!-- <r v-bind:t="s"/> -->
 <router-view></router-view>
 <foot />
-<pop ref='pop'>
+<!--<pop ref='pop'>
     <component slot="body"  v-bind:is='com'></component>
-<!--  <login slot='body'></login> -->
-</pop>
+  <login slot='body'></login> 
+</pop>-->
 <keep-alive include='top,foot' exclude='navs'>
 <componet v-bind:is='currentView'></componet></keep-alive>
 <input v-model.lazy="currentView" v-on:change="switchView(currentView)" />
   </div>
 </template>
 <script>
+import rems from '@/raw/rem.js'
+/* import pop from '@/mix/pop.js' */
 import top from '@/components/top'
+import imgs from '@/components/com/imgs.vue'
 /* import r from '@/components/r' */
 /* import navs from '@/components/nav' */
 import foot from '@/components/foot'
-import base from '@/raw/base.js'
-
+import C from '@/raw/base.js'
+window.C=C;
 import Vue from "vue/dist/vue.common.js"
 
-
-
-
+/*
    import('@/components/top.vue').then(cmp => {this.cmp=cmp
   // mountCmp.call(this, cmp, {title: 123456}, document.body)
       })
@@ -48,11 +48,11 @@ new cmp({ //eslint-disable-line
 })
 }
 
-
- var dc=Vue.extend(require('@/components/r.vue').default);
+/*var n='components/r.vue';
+ var dc=Vue.extend(require('@/'+n).default);
 let node = document.createElement('div')
 document.body.appendChild(node)
-new dc({el:node,propsData:this.props});/**/
+new dc({el:node,propsData:this.props});*/
 
 /* //父组件中:
 Vue.component('mycontent', {
@@ -73,30 +73,50 @@ Vue.component('mycontent', {
     });
 //子组件调用：
     <mycontent v-bind:content="content"></mycontent> */
-
-
 this.cc='my';
 //Vue.use(base);
 export default {
   name: 'App',
   components:{
      login: require('@/components/login').default,
+     imgs,
    top,
-/*     navs, 
+ /*   pop,
+    navs, 
   r,*/
-  foot,
-  pop:require('@/components/pop').default
+  foot/* ,
+  pop:require('@/components/pop').default */
    },
   data:function(){
 return {
   s:"",
   com:'foot',
   currentView:'top',
-  cc:''
+  /*bu：基础路径；s:小图路径数组，b:大图路径 */
+  ims:{bu:'https://cdn.17shanyuan.com/seller_backend/lic/op/longjiang/',
+  s:['83759fe210414c743f03ddbbae9dcab733da9954.jpeg','58b6f277f4ace76946589c2446ea466ddaa49b25.jpeg','c7281dcc651b6acc90644abb8c1910cb4a5e0fb0.jpeg'],
+  b:['83759fe210414c743f03ddbbae9dcab733da9954.jpeg','58b6f277f4ace76946589c2446ea466ddaa49b25.jpeg','c7281dcc651b6acc90644abb8c1910cb4a5e0fb0.jpeg'],
+ /*     sb:[{s:'c7281dcc651b6acc90644abb8c1910cb4a5e0fb0.jpeg',b:'c7281dcc651b6acc90644abb8c1910cb4a5e0fb0.jpeg'},
+          {s:'c7281dcc651b6acc90644abb8c1910cb4a5e0fb0.jpeg',b:'c7281dcc651b6acc90644abb8c1910cb4a5e0fb0.jpeg'},
+          {s:'c7281dcc651b6acc90644abb8c1910cb4a5e0fb0.jpeg', b:'c7281dcc651b6acc90644abb8c1910cb4a5e0fb0.jpeg'}], */
+  },/*bu：基础路径；s:小图路径数组，b:大图路径 */
+  cc:'',
+        pa: {
+        tit: "我是标题",
+        body: "body text",
+        cls: "pop1",
+        com:'swipe'
+      },
+      pb: {
+        tit: "2我是标题",
+        body: "2body text",
+        cls: "pop2"
+      } 
   /*,
   popv:false弹出窗状态*/
 }
 },
+/* mixins:[pop], */
 watch:{
 currentView:function(){
 
@@ -105,7 +125,9 @@ currentView:function(){
 },
 
 created:function(){
+  rems(648,10);
     this.localData();
+     // this.pop(this.pa)
 /*       var a='navs',
   p='../nav';
 Vue.component(a, function (resolve) {
@@ -116,8 +138,12 @@ this.components={
   }
   this.cc=a */
 },
+mounted:function(){
+
+},
 
   methods:{
+
     addCom:function(){
 /* var Profile = Vue.extend({
   template: '<p>AAAAAAA</p>',
