@@ -42,6 +42,6 @@
 	}
 	</script>
 		<style>
-		@import "http://localhost:60090/App_Themes/com.css";
-		@import "http://localhost/App_Themes/Base.css"; 
+/* 		@import "http://localhost:60090/App_Themes/com.css";
+ */		@import "http://localhost/App_Themes/Base.css"; 
 		</style>

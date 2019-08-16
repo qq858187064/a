@@ -23,9 +23,9 @@
 	}
 	</script>
 		<style>
-		@import "http://localhost:60090/App_Themes/com.css";
+/* 		@import "http://localhost:60090/App_Themes/com.css";
 		@import "http://localhost/App_Themes/Base.css"; 
-		.nav a{vertical-align: bottom}
+ */		.nav a{vertical-align: bottom}
 		.nav a.cm{color:#096;
 		font-weight: 600;
 		}
