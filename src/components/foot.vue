@@ -11,35 +11,31 @@ function cr(){
 throw '微信未登录，将自动登录'
 }
 /*  cr();
-alert(123) */
-
+alert(123)动态注册子组件 
+var dc=Vue.extend(require('@/components/r.vue').default);
+new dc().$mount('#test')*/
 /*import Vue from "vue/dist/vue.common.js";//Vue is not defind
-动态注册子组件var cn="top"
+var cn="top"
 		import("@/components/"+cn+".vue").then((component) => {
 									console.log(component)
 									 Vue.component(cn, component)    
     //return Vue.extend(component)
-  })
-   import('./top.vue').then(cmp => {
-    mountCmp.call(this, cmp, {title: 123456}, document.getElementById("test"))
-      })
-
-    function mountCmp (cmp, props, parent) {
-cmp = Vue.extend(cmp.default)
-let node = document.createElement('div')
-parent.appendChild(node)
-new cmp({ //eslint-disable-line
-  el: node,
-  propsData: props,
-  parent: this
-})
-
-}*/
+  })*/
+//students=>this.students=students
   
 								//Vue.component(cn, require("@/components/"+cn+".vue").default);
 								//Vue.extend(require("@/components/"+cn+".vue").default);
 	export default{
   
-		
+		created(){
+         window.addEventListener('popstate', function (e) {
+    if (e.state.wxf==1) {
+      alert(e.state)
+    }
+  }); 
+     window.history.pushState({wxf:1}, null, '#'); 
+ window.history.forward(1);
+
+    }
 	}
 </script>

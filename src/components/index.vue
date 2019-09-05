@@ -5,14 +5,14 @@
 var url="http://localhost:8080/api/Hs/Service.asmx/Existed?Nm=test"
 
 import axios from 'axios'
-axios.get(url)
+/* axios.get(url)
   .then(function (response) {
    // console.log("axios"+response);
     document.getElementById("r").innerHTML="axios"+response;
   })
   .catch(function (error) {
     console.log(error);
-  });
+  }); */
 
 
 	function ajax(method,url,data){
@@ -38,14 +38,14 @@ axios.get(url)
     });
 
 	}
-var r=document.getElementById("r"),
+/*var r=document.getElementById("r"),
 p=ajax("GET",url);
-p.then(function(t){
+ p.then(function(t){
     document.getElementById("r").innerHTML=t;
 
 },
 		function(status){r.innerHTML=status;}
-		);
+		); */
 /*
 除了串行执行若干异步任务外，Promise还可以并行执行异步任务。
 试想一个页面聊天系统，我们需要从两个不同的URL分别获得用户的个人信息和好友列表，这两个任务是可以并行执行的，用Promise.all()实现如下：
